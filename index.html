@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Document</title>
+</head>
+
+<body>
+    <header>
+        <a id="logo" href="/">Logo</a>
+        <ul class="nav-list">
+            <li><a href="#">¿Qué es pomodoro?</a></li>
+            <li><a href="#">Sobre nosotros</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+
+    </header>
+
+    <main>
+        <section class="settings">
+            <div class="settings-title">
+                <h3>Settings</h3>
+                <div class="buttons-title">
+                    <button>min</button>
+                    <button>max</button>
+                </div>
+            </div>
+            <div class="dark-mode settings-divs">
+                <p>Dark mode</p>
+                <button>Off</button>
+            </div>
+            <div class="focus-length settings-divs">
+                <p>focus length</p>
+                <button>timer scrool</button>
+            </div>
+            <div class="max-focus settings-divs">
+                <p>Pomodoros until long break</p>
+                <button>timer scrool</button>
+            </div>
+            <div class="short-break settings-divs">
+                <p>Short break length</p>
+                <button>timer scrool</button>
+            </div>
+            <div class="long-break settings-divs">
+                <p>Short break length</p>
+                <button>timer scrool</button>
+            </div>
+            <div class="auto-resume-timer settings-divs">
+                <p>Short break length</p>
+                <button>off</button>
+            </div>
+            <div class="sound settings-divs">
+                <p>sound</p>
+                <button>off</button>
+            </div>
+            <div class="notifications settings-divs">
+                <p>Notifications</p>
+                <button>off</button>
+            </div>
+        </section>
+
+        <section class="time">
+            <h3 id="task-name">Countdown timer</h3>
+            <div class="container-time">
+                <div class="pomodoro-stage">
+                    <p class="icon-stage">☕</p>
+                    <p id="info-stage">Pomodoro stage</p>
+                </div>
+                <div class="options-task">
+                    <button>...</button>
+                    <button class="status-task">Start</button>
+                    <button class="next-task">Next</button>
+                </div>
+                <div>
+                    <div id="clock">
+                        <p>00</p>
+                        <p>00</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section id="task-container">
+            <h3>Task List</h3>
+
+            <div class="input-task">
+                <form action="" id="form">
+                    <input type="text" placeholder="write new task" id="writing-task">
+                    <input type="submit" value="Add" id="add-task">
+                </form>
+            </div>
+
+            <div id="task-list">
+            </div>
+
+        </section>
+    </main>
+    <script src="/script.js"></script>
+</body>
+
+</html>
