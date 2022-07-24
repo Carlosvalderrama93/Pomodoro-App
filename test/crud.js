@@ -19,6 +19,7 @@ function updateTask(id) {}
 function readTask(id) {}
 
 module.exports = {
+    tasks,
     addTask,
     removeTask,
     updateTask,
