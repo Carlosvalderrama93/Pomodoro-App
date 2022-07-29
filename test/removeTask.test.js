@@ -11,7 +11,7 @@ describe("Testing removeTask", function() {
       crud.removeTask(1)
 
       tasks = db.get("tasks").value()
-      assert.equal(tasks.length, 0)
+      assert.equal(tasks.length, 1)
     })
     it('should not fail if the id doesnt exists')
 })
