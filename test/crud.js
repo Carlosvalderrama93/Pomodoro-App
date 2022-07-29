@@ -3,31 +3,40 @@
 //Read
 //Update
 //Delete
-const db = require("./db")
+const db = require("./db");
 
 //button add task was pressed
-function addTask(completed) {
+function capitalizeFirstLetter(string) {
+  string = string.toLowerCase();
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function addTask(title, completed) {
   let isCompleted = false;
 
+  if (title === undefined){
+    return "Title is needed";
+  } else if (typeof title !== "string"){
+    return "Title must be string";
+  }
   if (completed === true) {
-   isCompleted = completed
+    isCompleted = completed;
   }
 
   const newTask = {
     id: db.get("tasks").value().length + 1,
-    completed: isCompleted
-  }
+    completed: isCompleted,
+    title: capitalizeFirstLetter(title),
+  };
 
-  db.get("tasks").push(newTask).write()
+  db.get("tasks").push(newTask).write();
 
-  return newTask
+  return newTask;
 }
 
 //press button delete
 function removeTask(id) {
-  db.get('tasks')
-    .remove({ id: id })
-    .write()
+  return db.get("tasks").remove({ id: id }).write();
 }
 
 //press button update task
@@ -37,8 +46,8 @@ function updateTask(id) {}
 function readTask(id) {}
 
 module.exports = {
-    addTask,
-    removeTask,
-    updateTask,
-    readTask
-}
+  addTask,
+  removeTask,
+  updateTask,
+  readTask,
+};
