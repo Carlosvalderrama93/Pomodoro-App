@@ -3,7 +3,7 @@ const assert = require('chai').assert
 const db = require("./db")
 const crud = require('./crud.js')
 
-describe.only("Testing CRUD Methods", function () {
+describe("Testing CRUD Methods", function () {
   describe("Testing addTask", function() {
     beforeEach(function () {
       db.set('tasks', []).write()
