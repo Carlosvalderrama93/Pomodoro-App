@@ -3,11 +3,10 @@ const assert = require('chai').assert
 const db = require("./db")
 const crud = require('./crud.js')
 
-describe.only("Testing CRUD Methods", function () {
+describe("Testing CRUD Methods", function () {
   describe("Testing addTask", function() {
     beforeEach(function () {
       db.set('tasks', []).write()
-      console.log("beforeEach")
     });
 
     it('should start as empty array', function() {
@@ -35,29 +34,29 @@ describe.only("Testing CRUD Methods", function () {
 
     it('should set the property completed as false if it is a number', function() {
       crud.addTask("Titulo", 2)
-      const tasks = db.get("tasks").value() //[{}]
-      const taskAdded = tasks[0] // {id, completed}
+      const tasks = db.get("tasks").value()
+      const taskAdded = tasks[0]
       assert.isFalse(taskAdded.completed)
     })
 
     it('should set completed as false if it is a string value', function() {
       crud.addTask("Titulo", "a")
-      const tasks = db.get("tasks").value() //[{}]
-      const taskAdded = tasks[0] // {id, completed}
+      const tasks = db.get("tasks").value()
+      const taskAdded = tasks[0]
       assert.isFalse(taskAdded.completed)
     })
 
     it('should set completed as false if it is false value', function() {
       crud.addTask("Titulo", false)
-      const tasks = db.get("tasks").value() //[{}]
-      const taskAdded = tasks[0] // {id, completed}
+      const tasks = db.get("tasks").value()
+      const taskAdded = tasks[0]
       assert.isFalse(taskAdded.completed)
     })
 
-    it('should set completed as true if it is true value', function() {
+    it('should set completed as true if it is a true value', function() {
       crud.addTask("Titulo", true)
-      const tasks = db.get("tasks").value() //[{}]
-      const taskAdded = tasks[0] // {id, completed}
+      const tasks = db.get("tasks").value()
+      const taskAdded = tasks[0]
       assert.isTrue(taskAdded.completed)
     })
 
