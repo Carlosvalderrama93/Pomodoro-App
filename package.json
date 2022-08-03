@@ -1,10 +1,13 @@
 {
   "dependencies": {
+    "@testing-library/dom": "^8.16.0",
     "chai": "^4.3.6",
+    "global-jsdom": "^8.5.0",
+    "jsdom": "^20.0.0",
     "lowdb": "1.0.0",
     "mocha": "^10.0.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --require global-jsdom/register"
   }
 }
