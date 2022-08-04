@@ -14,9 +14,9 @@ function capitalizeFirstLetter(string) {
 function addTask(title, completed) {
   let isCompleted = false;
 
-  if (title === undefined){
+  if (title === undefined) {
     return "Title is needed";
-  } else if (typeof title !== "string"){
+  } else if (typeof title !== "string") {
     return "Title must be string";
   }
   if (completed === true) {
@@ -40,10 +40,23 @@ function removeTask(id) {
 }
 
 //press button update task
-function updateTask(id) {}
+function updateTask(id, taskUpdated) {
+  if (id > db.get("tasks").size().value()) {
+    return "This task does not exist: " + id.toString();
+  }
+
+  return db.get("tasks").find({ id: id }).assign(taskUpdated).write();
+}
 
 //read a task
-function readTask(id) {}
+function readTask(id) {
+  if (id > db.get("tasks").size().value()) {
+    return "This task does not exist: " + id.toString();
+  }
+
+  const taskRead = db.get("tasks").find({ id: id }).value();
+  return taskRead;
+}
 
 module.exports = {
   addTask,
