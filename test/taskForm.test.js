@@ -30,7 +30,7 @@ function renderTasks() {
 
   const tasksDOM = tasks.map(task => renderTask(task))
 
-  dummyDiv.innerHTML = tasksDOM
+  dummyDiv.innerHTML = tasksDOM.join("")
 
   return dummyDiv
 }
@@ -111,7 +111,7 @@ describe.only("Task Form", function() {
     assert.include(tasks[0], {title: "Buy Milk"})
   })
 
-  it("should delete a specific task when there are two task", () => {
+  it.only("should delete a specific task when there are two task", () => {
     let tasksEl = renderTasks();
     const taskEl = tasksEl.querySelector(".task-1")
     const buttonEl = taskEl.querySelector(".task-delete")
