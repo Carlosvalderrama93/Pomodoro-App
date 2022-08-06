@@ -30,21 +30,16 @@ function renderTasks() {
 
   if (tasks.length === 0){
     return "There is not task"
-
   } else {
-
     const dummyDiv = document.createElement("div") //<div></div>
     dummyDiv.setAttribute("class", "tasks") //<div class="tasks"></div>
     const tasksDOM = []
 
     for (let index = 0; index < tasks.length; index++) {
       if (tasks[index].completed === false){
-
         const taskDOM = renderTask(tasks[index]);
         tasksDOM.push(taskDOM);
       }
-
-
     }
 
     dummyDiv.innerHTML = tasksDOM.join("")
@@ -68,7 +63,6 @@ describe("Task Form", function() {
       },
     ]
   })
-
 
   it("should update the task when checkbox change", () => {
     const task = tasks[0]
@@ -186,46 +180,35 @@ describe("Task Form", function() {
     const task = tasks.find(task => task.id === id);
     let taskEl = tasksEl.querySelector(`.task-${id}`); // 1ra tarea DOM
     let inputEl = taskEl.querySelector(".task-title"); //Linea boton DOM
-
     //Actualiza la tarea
     inputEl.addEventListener("change", (event) =>{
       const newValue = event.target.value; //guarda el nuevo cambio
-
       task.title = newValue; //actualiza el titulo
-
     });
 
-    //Dispara el evento change
     DOM.fireEvent.change(inputEl, {target:{value:"Consentir a Auri"}});
-
     assert.equal(inputEl.value, "Consentir a Auri");
     assert.equal(tasks[0].title, "Consentir a Auri");
-
   })
 
   it("should render a fallback message when tasks are empty", function(){
     tasks = [];
     const tasksEl = renderTasks();
     assert.equal(tasksEl, "There is not task");
-
   })
 
   it("should render uncompleted tasks", function (){
-
     const tasksEl = renderTasks();
 
     assert.equal(tasksEl.children.length, 1);
     assert.include(tasks[0], {completed: false});
-
   })
 
   it("should not render completed tasks", function (){
-
     const tasksEl = renderTasks();
 
     assert.equal(tasksEl.children.length, 1);
     assert.include(tasks[1], {completed: true});
-
   })
 
   it("should update the task priority when it changes")
