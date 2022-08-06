@@ -14,33 +14,55 @@ let tasks = [
   },
 ]
 
+
 function renderTask(task) {
-  return `
-    <div class="task task-${task.id}">
-      <input type="checkbox" ${task.completed ? "checked" : ""} class="task-completed"/>
-      <input type="text" class="task-title" value="${task.title}" />
-      <button class="task-delete" data-id="${task.id}">delete task</button>
-    </div>
-  `
+
+    return `
+      <div class="task task-${task.id}">
+        <input type="checkbox" ${task.completed ? "checked" : ""} class="task-completed"/>
+        <input type="text" class="task-title" value="${task.title}" />
+        <button class="task-delete" data-id="${task.id}">delete task</button>
+      </div>
+    `
 }
 
 function renderTasks() {
-  const dummyDiv = document.createElement("div") //<div></div>
-  dummyDiv.setAttribute("class", "tasks") //<div class="tasks"></div>
 
-  const tasksDOM = tasks.map(task => renderTask(task))
+  if (tasks.length === 0){
+    return "There is not task"
+  } else {
+    const dummyDiv = document.createElement("div") //<div></div>
+    dummyDiv.setAttribute("class", "tasks") //<div class="tasks"></div>
+    const tasksDOM = []
 
-  dummyDiv.innerHTML = tasksDOM.join("")
+    for (let index = 0; index < tasks.length; index++) {
+      if (tasks[index].completed === false){
+        const taskDOM = renderTask(tasks[index]);
+        tasksDOM.push(taskDOM);
+      }
+    }
 
-  return dummyDiv
+    dummyDiv.innerHTML = tasksDOM.join("")
+    return dummyDiv
+  }
 }
 
-describe.only("Task Form", function() {
+describe("Task Form", function() {
   beforeEach(() => {
     document.innerHTML = ""
+    tasks = [
+      {
+        title: "Buy Milk",
+        completed: false,
+        id: 1
+      },
+      {
+        title: "Sleep",
+        completed: true,
+        id: 2
+      },
+    ]
   })
-
-  it("should render uncompleted tasks")
 
   it("should update the task when checkbox change", () => {
     const task = tasks[0]
@@ -64,6 +86,16 @@ describe.only("Task Form", function() {
   })
 
   it("should update a specific task when there are two task", () => {
+    tasks = [
+      {title: "Consentir a Auri",
+      id: 1,
+      completed: false},
+
+      {title: "Consentir a Roger",
+      id: 2,
+      completed: false},
+    ]
+
     const tasksEl = renderTasks() // [task, taks]
     const task1El = tasksEl.querySelector(".task-1") // task
     const task2El = tasksEl.querySelector(".task-2") // task
@@ -80,10 +112,10 @@ describe.only("Task Form", function() {
 
     DOM.fireEvent.change(checkbox1El, { target: { checked: true }})
     assert.equal(checkbox1El.checked, true)
-    assert.equal(checkbox2El.checked, true)
-
-    DOM.fireEvent.change(checkbox2El, { target: { checked: false }})
     assert.equal(checkbox2El.checked, false)
+
+    DOM.fireEvent.change(checkbox2El, { target: { checked: true }})
+    assert.equal(checkbox2El.checked, true)
     assert.equal(checkbox1El.checked, true)
   })
 
@@ -111,7 +143,18 @@ describe.only("Task Form", function() {
     assert.include(tasks[0], {title: "Buy Milk"})
   })
 
-  it.only("should delete a specific task when there are two task", () => {
+  it("should delete a specific task when there are two task", () => {
+
+    tasks = [
+      {title: "Consentir a Auri",
+      id: 1,
+      completed: false},
+
+      {title: "Consentir a Roger",
+      id: 2,
+      completed: false},
+    ]
+
     let tasksEl = renderTasks();
     const taskEl = tasksEl.querySelector(".task-1")
     const buttonEl = taskEl.querySelector(".task-delete")
@@ -131,11 +174,44 @@ describe.only("Task Form", function() {
     assert.equal(tasks.length, 1)
   })
 
-  it("should update the task when the input change")
-  it("should render a fallback message when tasks are empty")
+  it("should update the task when the title change", function(){
+    let tasksEl = renderTasks(); // Lista de tareas en DOM.
+    const id = 1;
+    const task = tasks.find(task => task.id === id);
+    let taskEl = tasksEl.querySelector(`.task-${id}`); // 1ra tarea DOM
+    let inputEl = taskEl.querySelector(".task-title"); //Linea boton DOM
+    //Actualiza la tarea
+    inputEl.addEventListener("change", (event) =>{
+      const newValue = event.target.value; //guarda el nuevo cambio
+      task.title = newValue; //actualiza el titulo
+    });
 
-  it("should remove task if task-title is empty")
-  it("should not render completed tasks")
+    DOM.fireEvent.change(inputEl, {target:{value:"Consentir a Auri"}});
+    assert.equal(inputEl.value, "Consentir a Auri");
+    assert.equal(tasks[0].title, "Consentir a Auri");
+  })
+
+  it("should render a fallback message when tasks are empty", function(){
+    tasks = [];
+    const tasksEl = renderTasks();
+    assert.equal(tasksEl, "There is not task");
+  })
+
+  it("should render uncompleted tasks", function (){
+    const tasksEl = renderTasks();
+
+    assert.equal(tasksEl.children.length, 1);
+    assert.include(tasks[0], {completed: false});
+  })
+
+  it("should not render completed tasks", function (){
+    const tasksEl = renderTasks();
+
+    assert.equal(tasksEl.children.length, 1);
+    assert.include(tasks[1], {completed: true});
+  })
+
   it("should update the task priority when it changes")
-  it("")
+  it("should remove task if task-title is empty")
+
 })
