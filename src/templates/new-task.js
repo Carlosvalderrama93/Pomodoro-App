@@ -1,5 +1,5 @@
 import render from "./utils.js"
-import { renderTasks } from "./tasks.js"
+// import { renderTasks } from "./tasks.js"
 
 export const template = `<div class="new-task">
   <input type="text" class="new-task-title">
@@ -18,7 +18,7 @@ newTaksCreate.addEventListener("click", () => {
   const taskTitle  = newTaksTitle.value
   window.tasks.push({id: taskID, completed: false, title: taskTitle})
 
-  renderTasks()
+  // renderTasks()
 })
 
 export default newTaskEl
