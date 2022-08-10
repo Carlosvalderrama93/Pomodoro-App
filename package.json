@@ -8,6 +8,6 @@
     "mocha": "^10.0.0"
   },
   "scripts": {
-    "test": "mocha --require global-jsdom/register"
+    "test": "mocha --require global-jsdom/register src/todo-test/**/*.test.mjs --ignore test"
   }
 }
