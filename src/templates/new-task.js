@@ -1,33 +1,18 @@
 import render from "./utils.js"
-// import { renderTasks } from "./tasks.js"
+//0. export newTask
+//1. crear función new-task
+//2. crear template.
+//3. renderizar template.
+//4. retornar el template guardado
 
-export const template = `<div class="new-task">
-  <h3 class="new-task-header">To Do App</h3>
-  <input type="text" class="new-task-title">
-  <button disabled class="new-task-create">Create Task</button>
-</div>`
+//0 y 1
+export function newTask (){
+  const template = `<div class="new-task">
+  <h1 class="new-task-title">To do app</h1>
+  <input class="new-task-input" type="text">
+  <button class="new-task-button">Add</button>
+  </div>`; //2
 
-const newTaskEl = render(template)
-const newTaksTitle = newTaskEl.querySelector(".new-task-title")
-const newTaksCreate = newTaskEl.querySelector(".new-task-create")
-
-newTaksTitle.addEventListener("keyup", (e) => {
-  if (e.target.value.length > 0 ){
-    newTaksCreate.disabled = false;
-  } else {
-    newTaksCreate.disabled = true;
-  }
-})
-
-newTaksCreate.addEventListener("click", () => {
-  //const taskTitle  = newTaksTitle.value
-  newTaksTitle.value = "";
-  newTaksCreate.disabled = true;
-
-
-
-  // renderTasks()
-})
-
-
-export default newTaskEl
+  const newTaskEl = render(template); //3
+  return newTaskEl; // 4
+}

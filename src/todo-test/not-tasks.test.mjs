@@ -3,7 +3,7 @@ import DOM from "@testing-library/dom"
 
 import notTasksEl from "../templates/not-tasks.js"
 
-describe.only("Not Tasks", () => {
+describe("Not Tasks", () => {
   it("should have a title", function(){
     const notTaskHeader = notTasksEl.querySelector(".not-tasks-header");
 
