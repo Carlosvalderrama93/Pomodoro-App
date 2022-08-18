@@ -1,48 +1,39 @@
 import render from "./utils.js";
-import {renderTasks} from "./tasks.js";
 import db from "../db.js";
-import { deleteTask } from "./crud-task.js";
+import { renderTasks } from "./tasks.js";
 
-export function renderTask(task){
+//crear render task function
+export function renderTask(task) {
+  //crear template
   const template = `<div class="task task-${task.id}">
-    <input type="checkbox" ${task.completed ? "checked" : ""} class="task-completed"/>
-    <input type="text" class="task-title" value="${task.title}" />
-    <button class="task-delete" data-id="${task.id}">delete task</button>
-  </div>`
+    <input class="task-completed" type="checkbox">
+    <input class="task-text" type="text" value="${task.title}">
+    <button class="task-delete" data-id="${task.id}">Delete</button>
+  </div>`;
 
-  const taskEl = render(template);
-  const buttonTask = taskEl.querySelector(".task-delete");
+  const taskEl = render(template); // renderizar template
 
-  buttonTask.addEventListener("click", (event) =>{
+  const deleteButton = taskEl.querySelector(".task-delete"); //consultar botón delete-task
+  //addeventlistener botón
+  deleteButton.addEventListener("click", (event) => {
 
-    //1. identificar el id de la tarea del boton que se clicleo
-    //1. Iterar lista de tareas
-    //2. se va a comparar el Id de la taskEL con el ID del tasks-array
-    //3. guardamos las tareas que no coincidan con el ID del array y del taskEL
-    //4. db.algo y db.write.
-    //0. Volver a renderizar la lista de tareas.
-
-    const dataset = event.target.dataset;
-    const id = Number(dataset.id);
+    const dataset = event.target.dataset; // Accediendo al dataset
+    const id = Number(dataset.id); // Acceder y convertir la propiedad ID del Dataset a numero
     const tasks = db.data.tasks;
     const newTasks = [];
-
-    for (let i = 0; i < tasks.length; i++){
+    //iterar tasks
+    for(let i = 0; i < tasks.length; i++){
+      //comparamos para llenar nuevo arreglo de tareas
       if(tasks[i].id !== id){
         newTasks.push(tasks[i]);
       }
     }
-    db.data = {tasks : newTasks}
+    debugger
+    db.data = {tasks: newTasks};
     db.write();
-    renderTasks();
-  })
+
+    renderTasks()//Volver a renderizar tasks
+  });
 
   return taskEl;
 }
-
-//1. crear función
-//2. crear el template.
-//3. consultar el botón eliminar de la tarea
-//4.agregar un listener al boton
-//5. Implementar deleteTask
-//6. retorno
