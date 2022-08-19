@@ -1,38 +1,40 @@
 import render from "./utils.js";
-import db from "../db.js";
-import { renderTasks } from "./tasks.js";
+import { deleteTask } from "../crud.js";
+// crear template
+//renderizar template
+//agregar listerners
+// exportar
 
-//crear render task function
 export function renderTask(task) {
-  //crear template
   const template = `<div class="task task-${task.id}">
-    <input class="task-completed" type="checkbox">
-    <input class="task-text" type="text" value="${task.title}">
-    <button class="task-delete" data-id="${task.id}">Delete</button>
+    <input type="checkbox" class="task-complete">
+    <input type="text" class="task-text" data-id=${task.id} value="${task.title}">
+    <button class="task-delete" data-id=${task.id}>Delete</button>
   </div>`;
 
-  const taskEl = render(template); // renderizar template
+  const taskEl = render(template);
 
-  const deleteButton = taskEl.querySelector(".task-delete"); //consultar botón delete-task
-  //addeventlistener botón
-  deleteButton.addEventListener("click", (event) => {
+  //consultando task-completed
+  const taskCompleted = taskEl.querySelector(".task-complete");
+  taskCompleted.addEventListener("", (event) => {});
 
-    const dataset = event.target.dataset; // Accediendo al dataset
-    const id = Number(dataset.id); // Acceder y convertir la propiedad ID del Dataset a numero
-    const tasks = db.data.tasks;
-    const newTasks = [];
-    //iterar tasks
-    for(let i = 0; i < tasks.length; i++){
-      //comparamos para llenar nuevo arreglo de tareas
-      if(tasks[i].id !== id){
-        newTasks.push(tasks[i]);
-      }
+  //consultando task-text
+  const taskText = taskEl.querySelector(".task-text");
+  taskText.addEventListener("keyup", (event) => {
+    //if comparar length event.target.value
+    if (event.target.value.length === 0) {
+      const dataset = event.target.dataset; //identificar el ID de la tarea
+      const id = Number(dataset.id); //identificar el ID de la tarea
+      deleteTask(id); //DeleteTask
     }
-    debugger
-    db.data = {tasks: newTasks};
-    db.write();
+  });
 
-    renderTasks()//Volver a renderizar tasks
+  //consultando task-delete
+  const taskDeleteButton = taskEl.querySelector(".task-delete");
+  taskDeleteButton.addEventListener("click", (event) => {
+    const dataset = event.target.dataset; //identificar el ID de la tarea
+    const id = Number(dataset.id); //identificar el ID de la tarea
+    deleteTask(id);
   });
 
   return taskEl;

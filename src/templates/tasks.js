@@ -1,18 +1,24 @@
 import render from "./utils.js";
-import db from "../db.js";
 import { renderTask } from "./task.js";
+import db from "../db.js";
 
-const template = `<div class="tasks"></div>`;// crear template div contenedor
-const tasksEl = render(template);// renderizar div
+//crear template
+//renderizar template
+//renderizar tareas individuales
+//exportar
 
-// crear función
+const template = `<div class="tasks"></div>`;
+
+const tasksEl = render(template);
+
 export function renderTasks(){
   tasksEl.innerHTML = "";
-  const tasks = db.data.tasks;
-  // iterar db
-  for(let i = 0; i < tasks.length; i++){
-    const taskEl = renderTask(tasks[i]);// renderizar taskEl
-    tasksEl.appendChild(taskEl);// append child de taskEl a TasksEl
+  const tasks = db.data.tasks;//consultar tareas disponibles.
+  //iterar tareas
+  for (let i = 0; i < tasks.length; i++){
+    const taskEl = renderTask(tasks[i]);//renderizar tareas individuales
+    tasksEl.appendChild(taskEl);//appendChild de tasksEl con tareas individuales renderizadas
   }
-  return tasksEl;// return TasksEl
-};
+
+  return tasksEl;  //returnar tasksEl
+}

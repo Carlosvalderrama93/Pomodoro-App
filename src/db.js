@@ -4,6 +4,6 @@ const adapter = new LocalStorage('db')
 const db = new LowSync(adapter)
 
 db.read()
-db.data = { tasks: [{title:"Carlos", id: 1, completed:false}, {title:"Andres", id: 2, completed:false}] }
+db.data ||= { tasks: [] }
 db.write();
 export default db;
