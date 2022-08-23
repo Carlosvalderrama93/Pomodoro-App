@@ -1,24 +1,38 @@
 import render from "./utils.js";
-import { renderTask } from "./task.js";
 import db from "../db.js";
-
+import { renderTask } from "./task.js";
 //crear template
 //renderizar template
-//renderizar tareas individuales
-//exportar
+//consultar db
+//iterar db
+//renderizar task
+//appendChild a tasksEl de taskEl
+//retornar tasksEl
 
 const template = `<div class="tasks"></div>`;
-
 const tasksEl = render(template);
 
-export function renderTasks(){
-  tasksEl.innerHTML = "";
-  const tasks = db.data.tasks;//consultar tareas disponibles.
-  //iterar tareas
-  for (let i = 0; i < tasks.length; i++){
-    const taskEl = renderTask(tasks[i]);//renderizar tareas individuales
-    tasksEl.appendChild(taskEl);//appendChild de tasksEl con tareas individuales renderizadas
+export function renderTasks(filterType) {
+  if(filterType === undefined){
+    filterType = db.data.filterSelected;
   }
 
-  return tasksEl;  //returnar tasksEl
+  tasksEl.innerHTML = "";
+  const tasks = db.data.tasks;
+
+  for (let i = 0; i < tasks.length; i++) {
+    if(filterType === "completed" && tasks[i].completed ){
+      const taskEl = renderTask(tasks[i]);
+      tasksEl.appendChild(taskEl);
+    } else if (filterType === "active" && !tasks[i].completed){
+      const taskEl = renderTask(tasks[i]);
+      tasksEl.appendChild(taskEl);
+    } else if (filterType === "all") {
+      const taskEl = renderTask(tasks[i]);
+      tasksEl.appendChild(taskEl);
+    }
+
+  }
+
+  return tasksEl;
 }

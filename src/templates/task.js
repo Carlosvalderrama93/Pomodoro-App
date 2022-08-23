@@ -1,40 +1,56 @@
 import render from "./utils.js";
-import { deleteTask } from "../crud.js";
-// crear template
-//renderizar template
-//agregar listerners
-// exportar
+import { deleteTask, updatedTask } from "./crud-task.js";
+import { renderFilters } from "./filters.js";
+//crear template
+//renderizar
+//addEventListeners
+//return
 
 export function renderTask(task) {
-  const template = `<div class="task task-${task.id}">
-    <input type="checkbox" class="task-complete">
-    <input type="text" class="task-text" data-id=${task.id} value="${task.title}">
-    <button class="task-delete" data-id=${task.id}>Delete</button>
-  </div>`;
+  const template = `<div class="task">
+    <input type="checkbox" class="task-completed" data-id="${task.id}" ${
+    task.completed ? "checked" : ""
+  }>
+    <input type="text" class="task-input" value="${task.title}" data-id="${
+    task.id
+  }">
+    <button class="task-delete-button" data-id="${task.id}">Delete</button>
+    </div>`;
 
   const taskEl = render(template);
 
-  //consultando task-completed
-  const taskCompleted = taskEl.querySelector(".task-complete");
-  taskCompleted.addEventListener("", (event) => {});
+  const taskCompleted = taskEl.querySelector(".task-completed");
+  taskCompleted.addEventListener("change", (event) => {
+    //consultar db
+    //idenitficar ID task to be updated
+    //iterar db
+    //Buscar la tarea con el ID
+    //Actualizar status task
 
-  //consultando task-text
-  const taskText = taskEl.querySelector(".task-text");
-  taskText.addEventListener("keyup", (event) => {
-    //if comparar length event.target.value
-    if (event.target.value.length === 0) {
-      const dataset = event.target.dataset; //identificar el ID de la tarea
-      const id = Number(dataset.id); //identificar el ID de la tarea
-      deleteTask(id); //DeleteTask
-    }
+    const dataset = event.target.dataset;
+    const idTask = Number(dataset.id);
+    const isChecked = event.target.checked;
+
+    updatedTask(idTask, {completed: isChecked});
+    renderFilters();
   });
 
-  //consultando task-delete
-  const taskDeleteButton = taskEl.querySelector(".task-delete");
+  const taskInput = taskEl.querySelector(".task-input");
+  taskInput.addEventListener("keyup", (event) => {
+    const dataset = event.target.dataset;
+    const idTask = Number(dataset.id); // identificar Id de la tarea
+    const titleTask = event.target.value.trim();
+    if (titleTask.length === 0) {
+      deleteTask(idTask); //DeleteTask
+    }
+    updatedTask(idTask, {title: titleTask});
+  });
+
+  const taskDeleteButton = taskEl.querySelector(".task-delete-button");
   taskDeleteButton.addEventListener("click", (event) => {
-    const dataset = event.target.dataset; //identificar el ID de la tarea
-    const id = Number(dataset.id); //identificar el ID de la tarea
-    deleteTask(id);
+    const dataset = event.target.dataset;
+    const idTask = Number(dataset.id); // identificar Id de la tarea
+    deleteTask(idTask); //DeleteTask
   });
 
   return taskEl;

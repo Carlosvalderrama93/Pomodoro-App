@@ -1,34 +1,31 @@
 import render from "./utils.js";
-import {createTask} from "../crud.js";
+import { createTask } from "./crud-task.js";
+
 //crear template
-//renderizar el template
-//agregar listener
-//exportar
+//renderizar
 
 const template = `<div class="new-task">
-<h1>To do app</h1>
-<input type="text" class="new-task-input" placeholder="Write a task">
-<button class="new-task-add">Add</button>
-</div>`;
+    <h1>To Do App</h1>
+    <input type="text" class="new-task-input" placeholder="Write a task...">
+    <button class="new-task-button">Add</button>
+  </div>`;
 
 const newTaskEl = render(template);
-//consultando new-task-input
-const newTaskInput = newTaskEl.querySelector(".new-task-input");
 
+const newTaskInput = newTaskEl.querySelector(".new-task-input");
 newTaskInput.addEventListener("keyup", (event) => {
-  if (event.keyCode === 13){
-    const taskName = newTaskInput.value.trim(); //consultar el valor de newTaskInput;
+  if (event.keyCode === 13) {
+    const taskName = newTaskInput.value.trim(); //consultar nombre de la tarea.
     createTask(taskName);
-    newTaskInput.value = ""; //vaciar el input
+    newTaskInput.value = "";
   }
 });
 
-const newTaskAdd = newTaskEl.querySelector(".new-task-add");
-//clickear el botón añadir tarea
-newTaskAdd.addEventListener("click", function (event) {
-  const taskName = newTaskInput.value.trim(); //consultar el valor de newTaskInput;
+const newTaskButton = newTaskEl.querySelector(".new-task-button");
+newTaskButton.addEventListener("click", (event) => {
+  const taskName = newTaskInput.value.trim(); //consultar nombre de la tarea.
   createTask(taskName);
-  newTaskInput.value = ""; //vaciar el input
+  newTaskInput.value = "";
 });
 
 export default newTaskEl;
