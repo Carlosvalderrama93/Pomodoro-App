@@ -1,24 +1,34 @@
-import render from "./utils.js"
-// import { renderTasks } from "./tasks.js"
+import render from "./utils.js";
+import { createTask } from "./crud-task.js";
 
-export const template = `<div class="new-task">
-  <input type="text" class="new-task-title">
-  <button disabled class="new-task-create">Create Task</button>
-</div>`
+//crear template
+//renderizar
 
-const newTaskEl = render(template)
+const template = `<div class="new-task">
+    <h1 class="new-task-header">To Do App</h1>
+    <input type="text" class="new-task-input" placeholder="Write a task...">
+    <button class="new-task-button" disabled>Add</button>
+  </div>`;
 
-const newTaksTitle = newTaskEl.querySelector(".new-task-title")
-newTaksTitle.addEventListener("keyup", (e) => {})
+const newTaskEl = render(template);
 
-const newTaksCreate = newTaskEl.querySelector(".new-task-create")
+const newTaskInput = newTaskEl.querySelector(".new-task-input");
+newTaskInput.addEventListener("keyup", (event) => {
+  if (event.keyCode === 13) {
+    const taskName = newTaskInput.value.trim(); //consultar nombre de la tarea.
+    createTask(taskName);
+    newTaskInput.value = "";
+  }
 
-newTaksCreate.addEventListener("click", () => {
-  const taskID = window.tasks.length + 1
-  const taskTitle  = newTaksTitle.value
-  window.tasks.push({id: taskID, completed: false, title: taskTitle})
+  newTaskButton.disabled = newTaskInput.value.length < 1;
+});
 
-  // renderTasks()
-})
+const newTaskButton = newTaskEl.querySelector(".new-task-button");
+newTaskButton.addEventListener("click", (event) => {
+  const taskName = newTaskInput.value.trim(); //consultar nombre de la tarea.
+  createTask(taskName);
+  newTaskInput.value = "";
+  newTaskButton.disabled = true;
+});
 
-export default newTaskEl
+export default newTaskEl;
