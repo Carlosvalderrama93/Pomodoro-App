@@ -1,6 +1,6 @@
 import { assert } from "chai"
 import DOM from "@testing-library/dom"
-import {deleteTask} from "../templates/crud-task.js";
+import { deleteTask } from "../templates/crud-task.js";
 import {renderTask} from "../templates/task.js"
 
 import db from "../db.js";
@@ -21,16 +21,15 @@ describe("Task", () => {
     assert.equal(completedTask.className, "task-completed")
   })
 
-  it("should have a title class", function(){
-    const titleTask = taskEl.querySelector(".task-title");
-    assert.equal(titleTask.className, "task-title")
+  it("should have an input with class name task-input", function(){
+    const titleTask = taskEl.querySelector(".task-input");
+    assert.equal(titleTask.className, "task-input")
   })
 
-  it.only("should have a delete class", function(){
-    const deleteTask = taskEl.querySelector(".task-delete");
-    deleteTask();
-    DOM.fireEvent.click(deleteTask);
-    deleteTask ();
+  it("should have a delete class", function(){
+    const deleteTaskEl = taskEl.querySelector(".task-delete-button");
+
+    assert.equal(deleteTaskEl.className, "task-delete-button");
   })
 
   it("should delete the task when the title is erased", function(){

@@ -5,9 +5,9 @@ import { createTask } from "./crud-task.js";
 //renderizar
 
 const template = `<div class="new-task">
-    <h1>To Do App</h1>
+    <h1 class="new-task-header">To Do App</h1>
     <input type="text" class="new-task-input" placeholder="Write a task...">
-    <button class="new-task-button">Add</button>
+    <button class="new-task-button" disabled>Add</button>
   </div>`;
 
 const newTaskEl = render(template);
@@ -19,6 +19,8 @@ newTaskInput.addEventListener("keyup", (event) => {
     createTask(taskName);
     newTaskInput.value = "";
   }
+
+  newTaskButton.disabled = newTaskInput.value.length < 1;
 });
 
 const newTaskButton = newTaskEl.querySelector(".new-task-button");
@@ -26,6 +28,7 @@ newTaskButton.addEventListener("click", (event) => {
   const taskName = newTaskInput.value.trim(); //consultar nombre de la tarea.
   createTask(taskName);
   newTaskInput.value = "";
+  newTaskButton.disabled = true;
 });
 
 export default newTaskEl;

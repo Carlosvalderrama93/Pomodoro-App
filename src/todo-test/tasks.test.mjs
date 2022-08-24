@@ -20,8 +20,12 @@ describe("Tasks", () => {
   })
 
   it("should have at least one child", function(){
-    db.data = { tasks: [{title: "tarea-1", id: 10, completed:false}]}
+    db.data = {
+      tasks: [{title: "tarea-1", id: 10, completed:false}],
+      filterSelected:"all"
+    }
     db.write();
+
     const tasksEl = renderTasks();
     assert.equal(tasksEl.children.length, 1);
 
