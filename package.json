@@ -3,6 +3,8 @@
   "dependencies": {
     "@testing-library/dom": "^8.16.0",
     "chai": "^4.3.6",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
     "global-jsdom": "^8.5.0",
     "jsdom": "^20.0.0",
     "json-server": "^0.17.0",
@@ -11,6 +13,6 @@
   },
   "scripts": {
     "test": "mocha --require global-jsdom/register src/todo-test/**/*.test.mjs --ignore test",
-    "server": "json-server --watch db.json"
+    "start": "node server/index.js"
   }
 }
