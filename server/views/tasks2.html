@@ -1,0 +1,26 @@
+{% extends "templates/base.html" %}
+{% set title = "Tareas" %}
+
+{% block content %}
+
+<h1>
+  <a href="/">Todo Tasks</a>
+</h1>
+
+<h2>Tasks List</h2>
+
+<form action="/tasks2" method="post">
+  <input type="text" class="new-task-input" name="title" placeholder="write a task here...">
+  <button class="new-task-button">Send</button>
+</form>
+
+{% for task in tasks %}
+
+<input type="checkbox" {{ "checked" if task.completed }}>
+<input type="text" value="{{ task.title }}">
+<button>Delete</button>
+
+{% endfor %}
+
+
+{%endblock%}

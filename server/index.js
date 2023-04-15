@@ -1,33 +1,25 @@
 import express from "express"
-import nunjucks from "nunjucks"
 
-import db from "./db.js"
+import db from "./data/db.js"
 
-const PORT = process.env.PORT || 3000
 const server = express()
 
-// CONFIG
 server.use(express.json())
-server.use(express.urlencoded())
-server.set('views', './server/views')
-server.set('view engine', 'html')
-nunjucks.configure('views', {
-  autoescape: true,
-  express: server
-});
 
+server.get("/", (req, res) => res.json({home: "welcome"}))
+server.get("/tasks", (req, res) => {
+  res.json({tasks: db.data.tasks})
+})
+server.post("/tasks", async (req, res) => {
+  // save to the db
+  const task = req.body
+  db.data.tasks.push(task)
 
-server.get("/", (req, res) => {
-  res.render("home")
+  await db.write()
+
+  res.json({ status: "ok" })
 })
 
-//------ Aquí---
-server.get("/tasks2", (req, res) => {
-  res.render("tasks2", {tasks: db.data.tasks});
-});
-
-// server.get("/tasks/:id", (req, res) => {})
-
-server.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
+server.listen(process.env.PORT || 80, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`)
 })

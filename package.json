@@ -3,12 +3,14 @@
   "dependencies": {
     "@testing-library/dom": "^8.16.0",
     "chai": "^4.3.6",
+    "cors": "^2.8.5",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "global-jsdom": "^8.5.0",
     "jsdom": "^20.0.0",
     "lowdb": "^3.0.0",
-    "mocha": "^10.0.0"
+    "mocha": "^10.0.0",
+    "nunjucks": "^3.2.3"
   },
   "scripts": {
     "test": "mocha --require global-jsdom/register src/todo-test/**/*.test.mjs --ignore test",

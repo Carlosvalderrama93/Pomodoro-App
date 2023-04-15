@@ -1,5 +1,4 @@
 import render from "./utils.js";
-import db from "../db.js";
 import { renderTasks } from "./tasks.js";
 // Crear función renderFilters()
 // crear template
